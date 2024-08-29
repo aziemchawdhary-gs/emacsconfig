@@ -20,7 +20,9 @@
 (use-package helm
   :config (helm-mode))
 
-(use-package company)
+(use-package company
+  :ensure t
+  :config (global-company-mode 1))
 
 
 (global-set-key (kbd "C-x m") 'eshell)
