@@ -17,6 +17,18 @@
 (require 'evil)
 (evil-mode 1)
 
+(use-package modus-themes)
+(use-package wgrep)
+(use-package powerline
+  :commands powerline-default-theme
+  :config
+  (powerline-vim-theme))
+
+(add-hook 'after-init-hook (lambda () (recentf-mode 1)))
+(setq-default recentf-max-save-items 1000)
+(setq-default recentf-exclude '("/tmp/", "/ssh:"))
+
+
 (use-package yasnippet :ensure t)
 (use-package hydra :ensure t)
 
@@ -92,9 +104,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("e410458d3e769c33e0865971deb6e8422457fad02bf51f7862fa180ccc42c032" default))
  '(eglot-confirm-server-edits 'confirm nil nil "Customized with use-package eglot")
+ '(helm-completion-style 'helm)
  '(package-selected-packages
-   '(company eglot magit helm hydra yasnippet evil use-package)))
+   '(powerline modus-themes company eglot magit helm hydra yasnippet evil use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
