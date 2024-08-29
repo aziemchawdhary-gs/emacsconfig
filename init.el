@@ -10,6 +10,9 @@
 (setq use-package-always-ensure t)
 (require 'use-package)
 
+(setq byte-compile-warnings '(not obsolete))
+(setq warning-suppress-types '((comp) (bytecomp)))
+
 (package-install 'evil)
 (require 'evil)
 (evil-mode 1)
