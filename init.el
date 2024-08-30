@@ -17,6 +17,10 @@
 (setq byte-compile-warnings '(not obsolete))
 (setq warning-suppress-types '((comp) (bytecomp)))
 
+(setq-default tab-width 4                       ; Smaller tabs
+              indent-tabs-mode nil              ; Use spaces instead of tabs
+              auto-fill-function 'do-auto-fill) ; Auto-fill-mode everywhere
+
 (package-install 'evil)
 (require 'evil)
 (evil-mode 1)
@@ -46,6 +50,40 @@
 
 (global-set-key (kbd "C-x m") 'eshell)
 (use-package magit)
+
+(use-package diff-hl
+  :config
+  (global-diff-hl-mode 1))
+
+(use-package project
+  :config
+  (add-to-list 'project-switch-commands '(magit-project-status "Magit"
+                                                               ?m)))
+
+(use-package vterm
+  :defer t
+  :preface
+  (defvar vterms nil)
+
+  (defun toggle-vterm (&optional n)
+    (interactive)
+    (setq vterms (seq-filter 'buffer-live-p vterms))
+    (let ((default-directory (or (vc-root-dir) default-directory)))
+     (cond ((numberp n) (push (vterm n) vterms))
+           ((null vterms) (push (vterm 1) vterms))
+           ((seq-contains-p vterms (current-buffer))
+            (switch-to-buffer (car (seq-difference (buffer-list) vterms))))
+           (t (switch-to-buffer (car (seq-intersection (buffer-list) vterms)))))))
+
+  :config
+  ;; Don't query about killing vterm buffers, just kill it
+  (defadvice vterm (after kill-with-no-query nil activate)
+    (set-process-query-on-exit-flag (get-buffer-process ad-return-value) nil)))
+
+(use-package which-key
+  :config
+  (which-key-mode 1))
+
 
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x b") 'helm-mini)
