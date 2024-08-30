@@ -112,15 +112,15 @@
 			      "--jvm-arg=-Xms1G"
 			      "--jvm-arg=-XX:+UseStringDeduplication")))
   (add-to-list 'eglot-server-programs
-               '((c-mode c-ts-mode c++-mode c++-ts-mode) . ("ccls" "--init" "{\"compilationDatabaseDirectory\": \"build\"}")))
+               '((c-mode c-ts-mode c++-mode c++-ts-mode) . ("ccls")))
 
 
   :hook
   ((java-mode . eglot-ensure)
-   (c-mode . 'eglot-ensure)
-   (c-ts-mode . 'eglot-ensure)
-   (c++-mode . 'eglot-ensure)
-   (c++-ts-mode . 'eglot-ensure))
+   (c-mode . eglot-ensure)
+   (c-ts-mode . eglot-ensure)
+   (c++-mode . eglot-ensure)
+   (c++-ts-mode . eglot-ensure))
 
   :custom
   (eglot-report-progress t)
