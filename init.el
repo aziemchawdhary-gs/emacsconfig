@@ -2,6 +2,10 @@
 (setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024))
 
+(set-language-environment "UTF-8")
+(prefer-coding-system 'utf-8)
+
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
@@ -93,7 +97,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("e410458d3e769c33e0865971deb6e8422457fad02bf51f7862fa180ccc42c032" default))
+   '("1d6b446390c172036395b3b87b75321cc6af7723c7545b28379b46cc1ae0af9e" "9a977ddae55e0e91c09952e96d614ae0be69727ea78ca145beea1aae01ac78d2" "e410458d3e769c33e0865971deb6e8422457fad02bf51f7862fa180ccc42c032" default))
  '(eglot-confirm-server-edits 'confirm nil nil "Customized with use-package eglot")
  '(helm-completion-style 'helm)
  '(package-selected-packages
