@@ -63,14 +63,22 @@
          ("C-c e r" . #'eglot-rename)
          ("C-c e F" . #'eglot-format-buffer))
   :config
-  (setcdr (assq 'java-mode eglot-server-programs)
-          `("jdtls" "-data" "/home/aziem/.cache/emacs/workspace/"
-            "--jvm-arg=-XX:+UseG1GC"
-            "--jvm-arg=-Xmx10G"
-            "--jvm-arg=-Xms1G"
-            "--jvm-arg=-XX:+UseStringDeduplication"))
+  (add-to-list 'eglot-server-programs
+	       '(java-mode . ("jdtls" "-data" "/home/aziem/.cache/emacs/workspace/"
+			      "--jvm-arg=-XX:+UseG1GC"
+			      "--jvm-arg=-Xmx10G"
+			      "--jvm-arg=-Xms1G"
+			      "--jvm-arg=-XX:+UseStringDeduplication")))
+  (add-to-list 'eglot-server-programs
+               '((c-mode c-ts-mode c++-mode c++-ts-mode) . ("ccls" "--init" "{\"compilationDatabaseDirectory\": \"build\"}")))
+
+
   :hook
-  ((java-mode . eglot-ensure))
+  ((java-mode . eglot-ensure)
+   (c-mode . 'eglot-ensure)
+   (c-ts-mode . 'eglot-ensure)
+   (c++-mode . 'eglot-ensure)
+   (c++-ts-mode . 'eglot-ensure))
 
   :custom
   (eglot-report-progress t)
@@ -79,26 +87,6 @@
   (eglot-extend-to-xref t)
   (eglot-stay-out-of '(flymake)))
 
-;; (defun kb/java-mode ()
-;;   "Configure java mode settings."
-;;   (subword-mode)
-;;   (setq-local tab-width 4)
-;;   (setq-local c-basic-offset 4)
-;;   (eglot-ensure))
-
-;; (use-package eglot-java
-;;   :after eglot
-;;   :config
-;;   (setq eglot-java-eclipse-jdt-args (list "-noverify"
-;;                                           "-Xms1G"
-;;                                           "-Xmx10G"
-;;                                           "-XX:+UnlockExperimentalVMOptions"
-;;                                           "-XX:+UseZGC"
-;;                                           "-XX:+UseStringDeduplication"
-;;                                           "-XX:AdaptiveSizePolicyWeight=90"
-;;                                           "-Dsun.zip.disableMemoryMapping=true"))
-;;   :hook ((java-mode . eglot-java-mode)
-;;          (java-ts-mode . eglot-java-mode)))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -116,3 +104,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
