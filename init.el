@@ -138,17 +138,67 @@
   (eglot-extend-to-xref t)
   (eglot-stay-out-of '(flymake)))
 
+(use-package company
+  :defer t
+  :ensure t
+  :custom
+  (company-tooltip-align-annotations t)
+  (company-minimum-prefix-min-length 1)
+  (company-idle-delay 0.2)
+  (company-tooltip-maximum-width 50)
+    (define-key company-active-map (kbd "C-y")
+			  (lambda ()
+				(interactive)
+				(company-show-doc-buffer)))
+  (define-key company-active-map [tab] 'company-complete-selection)
+  (define-key company-active-map (kbd "TAB") 'company-complete-selection)
+  (define-key company-active-map [ret] 'company-complete-selection)
+  (define-key company-active-map (kbd "RET") 'company-complete-selection)
+  :hook
+  (after-init . global-company-mode))
+
+(use-package diff-hl
+  :defer t
+  :ensure t
+  :hook
+  (find-file . (lambda ()
+                 (global-diff-hl-mode)           ;; Enable Diff-HL mode for all files.
+                 (diff-hl-flydiff-mode)          ;; Automatically refresh diffs.
+                 (diff-hl-margin-mode)))         ;; Show diff indicators in the margin.
+  :custom
+  (diff-hl-side 'left)                           ;; Set the side for diff indicators.
+  (diff-hl-margin-symbols-alist '((insert . "│") ;; Customize symbols for each change type.
+                                   (delete . "-")
+                                   (change . "│")
+                                   (unknown . "?")
+                                   (ignored . "i"))))
+
+
+(use-package xclip
+  :ensure t
+  :defer t
+  :hook
+  (after-init . xclip-mode))
+
+(use-package indent-guide
+  :defer t
+  :ensure t
+  :hook
+  (prog-mode . indent-guide-mode)  ;; Activate indent-guide in programming modes.
+  :config
+  (setq indent-guide-char "│")) 
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("1d6b446390c172036395b3b87b75321cc6af7723c7545b28379b46cc1ae0af9e" "9a977ddae55e0e91c09952e96d614ae0be69727ea78ca145beea1aae01ac78d2" "e410458d3e769c33e0865971deb6e8422457fad02bf51f7862fa180ccc42c032" default))
+   '("b0cbcb2fa0c69ab36f4505fec9967969b73327f1b8564f9afface8afd216bc93" "1d6b446390c172036395b3b87b75321cc6af7723c7545b28379b46cc1ae0af9e" "9a977ddae55e0e91c09952e96d614ae0be69727ea78ca145beea1aae01ac78d2" "e410458d3e769c33e0865971deb6e8422457fad02bf51f7862fa180ccc42c032" default))
  '(eglot-confirm-server-edits 'confirm nil nil "Customized with use-package eglot")
  '(helm-completion-style 'helm)
  '(package-selected-packages
-   '(powerline modus-themes company eglot magit helm hydra yasnippet evil use-package)))
+   '(indent-guide xclip powerline modus-themes company eglot magit helm hydra yasnippet evil use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
