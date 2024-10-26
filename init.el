@@ -59,7 +59,16 @@
   :config
   (add-to-list 'project-switch-commands '(magit-project-status "Magit"
                                                                ?m)))
-
+(use-package org
+  :defer t
+  :config
+  (setq org-adapt-indentation t
+        org-hide-leading-stars t
+        org-hide-emphasis-markers t
+        org-pretty-entities t
+        org-src-fontify-natively t
+        org-startup-folded t
+        org-edit-src-content-indentation 0))
 (use-package vterm
   :defer t
   :preface
