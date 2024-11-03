@@ -69,6 +69,7 @@
         org-src-fontify-natively t
         org-startup-folded t
         org-edit-src-content-indentation 0))
+
 (use-package vterm
   :defer t
   :preface
@@ -186,7 +187,15 @@
   :hook
   (prog-mode . indent-guide-mode)  ;; Activate indent-guide in programming modes.
   :config
-  (setq indent-guide-char "│")) 
+  (setq indent-guide-char "│"))
+
+(use-package rainbow-delimiters
+  :defer t
+  :ensure t
+  :hook
+  (prog-mode . rainbow-delimiters-mode))
+
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -198,7 +207,7 @@
  '(eglot-confirm-server-edits 'confirm nil nil "Customized with use-package eglot")
  '(helm-completion-style 'helm)
  '(package-selected-packages
-   '(indent-guide xclip powerline modus-themes company eglot magit helm hydra yasnippet evil use-package)))
+   '(rainbow-delimiters indent-guide xclip powerline modus-themes company eglot magit helm hydra yasnippet evil use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
